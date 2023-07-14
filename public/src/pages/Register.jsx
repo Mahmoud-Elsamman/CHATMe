@@ -1,15 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function register() {
+function Register() {
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("form");
+    handleValidation();
   };
 
-  const handleChange = (event) => {};
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
+  const handleValidation = () => {
+    const { username, email, password, confirmPassword } = values;
+    if (password !== confirmPassword) {
+      toast.error(
+        "Password and confirm password must be the same.",
+        toastOptions
+      );
+      return false;
+    } else if (username.length < 3) {
+      toast.error(
+        "Username should be greater than 3 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (password.length < 8) {
+      toast.error(
+        "Password should be equal or greater than 8 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (email === "") {
+      toast.error("email is required.", toastOptions);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
   return (
     <>
       <FormContainer>
@@ -40,7 +87,7 @@ function register() {
           <input
             type='password'
             placeholder='Confirm Password'
-            name='confirmPassword '
+            name='confirmPassword'
             onChange={(e) => handleChange(e)}
           />
 
@@ -50,6 +97,7 @@ function register() {
           </span>
         </form>
       </FormContainer>
+      <ToastContainer />
     </>
   );
 }
@@ -122,4 +170,4 @@ const FormContainer = styled.div`
     }
   }
 `;
-export default register;
+export default Register;
