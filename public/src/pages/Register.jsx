@@ -40,7 +40,7 @@ function Register() {
       }
 
       if (data.status === true) {
-        localStorage.setItem("CHATMe-users", JSON.stringify(data.user));
+        localStorage.setItem("CHATMe-user", JSON.stringify(data.user));
         navigate("/");
       }
     }
