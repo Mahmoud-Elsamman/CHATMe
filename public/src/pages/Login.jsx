@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
@@ -23,6 +23,12 @@ function Login() {
     theme: "dark",
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("CHATMe-user")) {
+      navigate("/");
+    }
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
@@ -37,7 +43,7 @@ function Login() {
       }
 
       if (data.status === true) {
-        localStorage.setItem("CHATMe-users", JSON.stringify(data.user));
+        localStorage.setItem("CHATMe-user", JSON.stringify(data.user));
         navigate("/");
       }
     }
@@ -147,7 +153,7 @@ const FormContainer = styled.div`
       font-size: 1rem;
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
-      &: hover {
+      &:hover {
         background-color: #4e0eff;
       }
     }
