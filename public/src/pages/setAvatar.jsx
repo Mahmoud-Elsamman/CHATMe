@@ -53,15 +53,26 @@ export default function SetAvatar() {
     const data = [];
     async function fetchImages() {
       setIsLoading(true);
-      for (let i = 0; i < 4; i++) {
-        const image = await axios.get(
-          `${api}/${Math.round(Math.random() * 1000)}`
-        );
-        const buffer = new Buffer(image.data);
-        data.push(buffer.toString("base64"));
+      try {
+        for (let i = 0; i < 4; i++) {
+          const image = await axios.get(
+            `${api}/${Math.round(Math.random() * 1000)}`
+          );
+          const buffer = new Buffer(image.data);
+          data.push(buffer.toString("base64"));
+        }
+        setAvatars(data);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.code === "ERR_NETWORK") {
+          toast.error(
+            "Error in network. Check your network please and try again",
+            toastOptions
+          );
+
+          setTimeout(fetchImages, 5000);
+        }
       }
-      setAvatars(data);
-      setIsLoading(false);
     }
     fetchImages();
   }, []);
