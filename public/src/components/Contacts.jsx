@@ -45,7 +45,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                     />
                   </div>
                   <div className='username'>
-                    <h3>{contact.username}</h3>
+                    <h4>{contact.username}</h4>
                   </div>
                 </div>
               );
@@ -59,7 +59,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
               />
             </div>
             <div className='username'>
-              <h2>{currentUserName}</h2>
+              <h3>{currentUserName}</h3>
             </div>
           </div>
         </Container>
@@ -102,7 +102,7 @@ const Container = styled.div`
     }
     .contact {
       background-color: #ffffff39;
-      min-height: 5rem;
+      min-height: 4.5rem;
       width: 90%;
       cursor: pointer;
       border-radius: 0.5rem;
@@ -113,12 +113,12 @@ const Container = styled.div`
       transition: 0.5s ease-in-out;
       .avatar {
         img {
-          height: 3rem;
+          height: 2.7rem;
         }
       }
 
       .username {
-        h3 {
+        h4 {
           color: white;
         }
       }
@@ -142,16 +142,16 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     .avatar {
       img {
-        height: 4rem;
+        height: 3.5rem;
         max-inline-size: 100%;
       }
     }
 
     .username {
-      h2 {
+      h3 {
         color: white;
       }
     }
