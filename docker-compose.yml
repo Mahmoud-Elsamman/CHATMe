@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - db:/data/db
+    networks:
+      - backend
+
+  server:
+    depends_on: mongodb
+    build:
+      context: ./server
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=$PORT
+      - MONGO_URL=$MONGO_URL
+    networks:
+      - backend
+      - frontend
+
+  client:
+    depends_on: server
+    build:
+      context: ./public
+    ports:
+      - "3000:80"
+    networks:
+      - frontend
+
+volumes:
+  db:
+
+networks:
+  backend:
+  frontend:
